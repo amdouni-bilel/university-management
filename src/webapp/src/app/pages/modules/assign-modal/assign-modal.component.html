@@ -1,0 +1,95 @@
+<div class="modal-header mt-3">
+    <h2 *ngIf="!update" class="h3 modal-title text-center font-size-24 bold" style="width: 100%;">Affecter une classe
+    </h2>
+    <h2 *ngIf="update" class="h3 modal-title text-center font-size-24 bold" style="width: 100%;">Modifier l'affectation
+    </h2>
+    <span class="close" aria-label="Close" data-dismiss="modal" (click)="closeModal()" style="cursor: pointer;">
+        <span aria-hidden="true">&times;</span>
+    </span>
+</div>
+
+<form [formGroup]="form">
+
+    <div class="modal-body pb-0">
+        <div class="row pt-1">
+            <div class="col-12 px-0">
+
+                <div class="row" style="padding-right: 5%;">
+                    <div class="col-2 py-2 px-0">
+                        <label class="float-right">Classes : </label>
+                    </div>
+                    <div class="col-10">
+                        <ng-select [items]="class$ | async" formControlName="classId" bindLabel="classId"
+                            bindValue="classId" groupBy="category"></ng-select>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-right: 5%;">
+                    <div class="col-2 py-2 px-0">
+                        <label class="float-right">Coefficient : </label>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <input type="text" formControlName="coefficient">
+                        <p class="media" *ngIf="form.get('coefficient').hasError('pattern')">
+                            <i class="icons icon-cancel color-error font-size-16"></i>
+                            <small class="color-error">Le coefficient est invalide</small>
+                        </p>
+                    </div>
+                    <div class="col-2 py-2">
+                        <label class="float-right">Nombre d'heures : </label>
+                    </div>
+                    <div class="col-4 pl-0">
+                        <input type="text" formControlName="nbrHour">
+                        <p class="media" *ngIf="form.get('nbrHour').hasError('pattern')">
+                            <i class="icons icon-cancel color-error font-size-16"></i>
+                            <small class="color-error">Le nombre d'heures est invalide</small>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-right: 5%;">
+                    <div class="col-2 py-2 px-0">
+                        <label class="float-right">Semestre : </label>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <ng-select [items]="semesters$ | async" formControlName="semesterId" bindLabel="label"
+                            (change)="onChangeSemester($event)" bindValue="semestreId">
+                        </ng-select>
+                    </div>
+                    <div class="col-2 py-2">
+                        <label class="float-right">Période : </label>
+                    </div>
+                    <div class="col-4 pl-0">
+                        <ng-select [items]="periods" formControlName="periodId" bindLabel="label" bindValue="periodId"
+                            [multiple]="true" [readonly]="disabledPeriod">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class=" row" style="padding-right: 5%;">
+                    <div class="col-2 py-2 px-0">
+                        <label class="float-right">Enseignants : </label>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <ng-select [items]="teachers" formControlName="teacherIds" bindLabel="fullName"
+                            bindValue="teacherId" [multiple]="true" [maxSelectedItems]="2" [virtualScroll]="true"
+                            [loading]="loading" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()">
+                        </ng-select>
+                    </div>
+                    <div class="col-2 py-2">
+                        <label class="float-right">Type d'épreuve : </label>
+                    </div>
+                    <div class="col-4 pl-0">
+                        <ng-select [items]="typeExam$ | async" formControlName="typeExam">
+                        </ng-select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="reset()">Annuler</button>
+        <button type="button" class="btn btn-bg-primary" (click)="save()" [disabled]="!form.valid">Confirmer</button>
+    </div>
+</form>

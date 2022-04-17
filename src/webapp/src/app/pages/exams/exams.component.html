@@ -1,0 +1,297 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#ccb581" type="ball-circus" [fullScreen]="true">
+    <p class="color-white"> Loading... </p>
+</ngx-spinner>
+
+<div class="card bg-white row" *ngIf="isTeacher">
+    <div class="card-header">
+        <div class="d-flex justify-content-around mb-3">
+            <div class="p-2"><span class="font-weight-bold color-primary">Nombre de seveillance:</span>
+                {{nbrSurveillance}}</div>
+            <div class="p-2"><span class="font-weight-bold color-primary">Nombre d'heure de seveillance:</span>
+                {{houreSurveillance}}</div>
+        </div>
+    </div>
+</div>
+
+<div class="row bg-white" style="box-shadow: 10px 5px 5px #e6e6e6;">
+    <div class="col-12">
+
+        <div class="row border-bottom">
+            <div class="col-12">
+                <div class="search-criteria">
+
+                    <div class="py-2">
+                        <div class="float-left">
+                            <p class="bold color-title font-size-20 mb-0">Liste des épreuves</p>
+                        </div>
+                        <div class="dropdown float-right">
+                            <button *ngIf="!isStudent && !isTeacher" type="button"
+                                class="btn btn-bg-add font-size-12 btn-add mb-0 color-white" (click)="openModal()">
+                                <span class="pl-1">Nouveau</span>
+                            </button>
+                            <span *ngIf="!isStudent && !isTeacher" role="tab" id="headingOne" placement="bottom"
+                                ngbTooltip="Email">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                    href="#search-criteria-one" aria-expanded="false" aria-controls="collapseOne">
+                                    <i aria-hidden="true" class="icon-cloud_up icons mx-2 my-1"></i>
+                                </a>
+                            </span>
+                            <span *ngIf="!isStudent && !isTeacher" ngbTooltip="Télécharger Excel">
+                                <a (click)="export()">
+                                    <i class="icon-file_excel icons mx-2 my-1"></i>
+                                </a>
+                            </span>
+                            <span *ngIf="!isStudent && !isTeacher" ngbTooltip="Télécharger PDF">
+                                <a (click)="exportPdf()">
+                                    <i class="icon-file_pdf icons mx-2 my-1"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div id="accordion" class="accordion mb-0" role="tablist" aria-multiselectable="true">
+                        <div class="card card-search">
+                            <div id="search-criteria-one" class="border-top collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="card-block bg-white py-4" style="overflow: visible;">
+
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-2 py-2 px-0">
+                                                <label class="float-right"> Session :</label>
+                                            </div>
+                                            <div class="col-4 pr-0">
+                                                <ng-select [items]="sessions" [(ngModel)]="sessionMail"
+                                                    [multiple]="true" bindLabel="label" bindValue="label"
+                                                    appendTo="body" (change)="onChangeSession($event)"
+                                                    (remove)="onRemoveSession($event)"
+                                                    (clear)="onRemoveSession($event)">
+                                                </ng-select>
+                                            </div>
+                                            <div class="col-2 py-2 px-0">
+                                                <label class="float-right"> Classe :</label>
+                                            </div>
+                                            <div class="col-4 pr-0">
+                                                <ng-select [items]="classesEmail" [multiple]="true"
+                                                    [(ngModel)]="emailClasses" appendTo="body">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="row float-right">
+                                            <div class="col-12 pr-0">
+                                                <button class="btn btn-primary" (click)="sendMail()"
+                                                    [disabled]="!emailClasses || emailClasses?.length == 0">Envoyer</button>
+                                                <button class="btn btn-default">Annuler</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-4 px-0">
+            <p-table [columns]="selectedColumns" [value]="exams" [paginator]="true" [rows]="10"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Affichage de {last} sur {totalRecords} épreuves"
+                styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo">
+                <ng-template pTemplate="caption">
+                    <ng-select [items]="cols" [(ngModel)]="selectedColumns" bindLabel="header"
+                        placeholder="Choose Columns" [multiple]="true">
+                    </ng-select>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns"
+                            [pSortableColumn]="col.hasOwnProperty('subField') ? col.subField :  col.field">
+                            {{col.header}} <p-sortIcon
+                                [field]="col.hasOwnProperty('subField') ? col.subField :  col.field"></p-sortIcon>
+                        </th>
+                        <th *ngIf="!isStudent && !isTeacher" style="width:5rem"></th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            <p-columnFilter type="text"
+                                [field]="col.hasOwnProperty('subField') ? col.subField :  col.field" display="menu">
+                            </p-columnFilter>
+                        </th>
+                        <th *ngIf="!isStudent && !isTeacher"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            <ng-container [ngSwitch]="col.type">
+                                <ng-container *ngSwitchCase="'date'">
+                                    {{rowData[col.field]}}
+                                </ng-container>
+                                <ng-container *ngSwitchCase="'function'">
+                                    {{col.format(rowData[col.field])}}
+                                </ng-container>
+                                <ng-container *ngSwitchCase="'object'">
+                                    {{rowData[col.field][col.subField]}}
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                    {{rowData[col.field]}}
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                        <td *ngIf="!isStudent && !isTeacher" style="text-align:center">
+                            <a (click)="openModalUpdate(rowData)">
+                                <i class="icons icon-edit size-16"></i>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a (click)="openDeleteModal(rowData)">
+                                <i class="icons icon-trash size-16"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+
+<ng-template *ngIf="!isStudent && !isTeacher" #content let-modal>
+    <div class="modal-header mt-3">
+        <h2 class="h3 modal-title text-center font-size-24 bold" style="width: 100%;">Modifier un épreuve pour un groupe
+        </h2>
+        <span class="close" aria-label="Close" data-dismiss="modal" (click)="modal.close()" style="cursor: pointer;">
+            <span aria-hidden="true">&times;</span>
+        </span>
+    </div>
+    <form [formGroup]="form">
+        <div *ngIf="showLoaderError" class="alert alert-error alert-icon alert-dismissible width-450" role="alert"
+            style="margin-left: auto; margin-right: auto;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <i class="icons icon-alert color-white" aria-hidden="true"></i>
+            {{saveError}}
+        </div>
+        <div *ngIf="showLoaderSuccess" class="alert alert-valid alert-icon alert-dismissible width-450" role="alert"
+            style="margin-left: auto; margin-right: auto;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <i class="icons icon-arrow_circle_down color-white" aria-hidden="true"></i>
+            {{saveSuccess}}
+        </div>
+
+        <div class="modal-body mb-2">
+            <div class="row pt-1" style="padding-right: 5%;">
+                <div class="col-12 px-0 mb-2">
+                    <div class="row" style="padding-right: 5%;">
+                        <div class="col-2 py-2 px-0">
+                            <label class="float-right">Bloc : <span class="color-error">*</span></label>
+                        </div>
+                        <div class="col-4 pr-0">
+                            <ng-select [items]="blocs$ | async" formControlName="bloc" bindLabel="label"
+                                bindValue="pole" groupBy="blocs" [closeOnSelect]="false" [selectableGroup]="true"
+                                [selectableGroupAsModel]="false" (change)="onChangeBoc($event)"
+                                (remove)="onRemoveBloc($event)" (clear)="onClearBloc($event)" [multiple]="true">
+                                <ng-template ng-multi-label-tmp let-items="items">
+                                    {{items.length}} blocs séléctionnées
+                                </ng-template>
+                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                        [ngModelOptions]="{standalone: true}" style="height: auto;">
+                                    {{item.label}}
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                        [ngModelOptions]="{standalone: true}" style="height: auto;">
+                                    {{item}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-2 py-2">
+                            <label class="float-right">Salles : </label>
+                        </div>
+                        <div class="col-4 pl-0">
+                            <ng-select [items]="rooms" formControlName="rooms" [multiple]="true" bindLabel="classRoomId"
+                                bindValue="classRoomId">
+                                <ng-template ng-multi-label-tmp let-items="items">
+                                    {{items.length}} salles séléctionnées
+                                </ng-template>`
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                        [ngModelOptions]="{standalone: true}" style="height: auto;">
+                                    {{item.classRoomId}}
+                                </ng-template>
+                                <ng-template ng-header-tmp>
+                                    <small class="form-text text-muted">{{rooms?.length}} salles</small>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-right: 5%;">
+                        <div class="col-2 py-2 px-0">
+                            <label class="float-right">UP : <span class="color-error">*</span></label>
+                        </div>
+                        <div class="col-3 pr-0">
+                            <ng-select [items]="department$ | async" formControlName="up" bindLabel="label"
+                                bindValue="departmenetId" groupBy="up" [closeOnSelect]="false" [selectableGroup]="true"
+                                [selectableGroupAsModel]="false" (change)="onChangeDepartmenet($event)"
+                                (remove)="onRemoveDepartmenet($event)" (clear)="onClearDepartmenet($event)"
+                                [multiple]="true">
+                                <ng-template ng-multi-label-tmp let-items="items">
+                                    {{items.length}} up séléctionnées
+                                </ng-template>
+                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                        [ngModelOptions]="{standalone: true}" style="height: auto;">
+                                    {{item.label}}
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                        [ngModelOptions]="{standalone: true}" style="height: auto;">
+                                    {{item}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-1 pr-0">
+                            <input [(ngModel)]="nbrTeachers" type="number" min="1" [max]="teachers?.length"
+                                (keyup)="changedNbrTeacher($event)" [ngModelOptions]="{standalone: true}">
+                        </div>
+
+                        <div class="col-2 py-2">
+                            <label class="float-right">Enseigants : </label>
+                        </div>
+                        <div class="col-4 pl-0">
+                            <ng-select [items]="teachers" formControlName="teachers" [multiple]="true"
+                                bindLabel="fullName" bindValue="teacherId">
+                                <ng-template ng-multi-label-tmp let-items="items">
+                                    {{items.length}} enseigants séléctionnées
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                        [ngModelOptions]="{standalone: true}" style="height: auto;">
+                                    {{item.fullName}}
+                                </ng-template>
+                                <ng-template ng-header-tmp>
+                                    <small class="form-text text-muted">{{teachers?.length}} enseigants</small>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default">Annuler</button>
+            <button type="button" class="btn btn-bg-primary" [disabled]="!form.valid"
+                (click)="updateExam()">Confirmer</button>
+        </div>
+    </form>
+</ng-template>

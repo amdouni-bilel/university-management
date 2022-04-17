@@ -1,0 +1,50 @@
+docker exec -it oracle11g sqlplus
+Enter user-name: SYS as SYSDBA
+Enter password: oracle
+
+SQL> CREATE TABLESPACE DEV_SPACE DATAFILE 'dev_space.dat' SIZE 500M AUTOEXTEND ON NEXT 10M;
+SQL> DEFINE NEW_USER = 'scoemploi';
+SQL> CREATE USER &NEW_USER. IDENTIFIED BY "1234";
+SQL> GRANT CONNECT, RESOURCE, CREATE JOB, CREATE VIEW, CREATE ANY CONTEXT TO &NEW_USER;
+SQL> ALTER USER &NEW_USER QUOTA UNLIMITED ON USERS;
+SQL> ALTER USER &NEW_USER DEFAULT TABLESPACE DEV_SPACE;
+
+SQL> connect dev_user/1234;
+
+select 'drop table '||table_name||' cascade constraints;' from user_tables;
+
+drop table CLASSE cascade constraints;
+drop table CLASSE_GROUP cascade constraints;
+drop table DEPARTMENT cascade constraints;
+drop table DEPARTMENT_UP cascade constraints;
+drop table DISPONIBILITY cascade constraints;
+drop table EPREUVE cascade constraints;
+drop table EPREUVE_CLASSE cascade constraints;
+drop table ESP_ENSEIGNANT cascade constraints;
+drop table ESP_ETUDIANT cascade constraints;
+drop table ESP_MODULE cascade constraints;
+drop table ESP_MODULE_CLASS cascade constraints;
+drop table ESP_MODULE_CLASS_ENSEIGNANT cascade constraints;
+drop table ESP_MODULE_PERIOD cascade constraints;
+drop table GROUPE cascade constraints;
+drop table PERIOD cascade constraints;
+drop table ROOMENTITY_EXAMIDS cascade constraints;
+drop table SALLE cascade constraints;
+drop table SEANCE cascade constraints;
+drop table SEMAINE cascade constraints;
+drop table SEMESTER cascade constraints;
+drop table SPECIALITY cascade constraints;
+drop table SUPERVISION_ROOM cascade constraints;
+drop table SUPERVISION_TEACHER cascade constraints;
+drop table TEACHERENTITY_EXAMIDS cascade constraints;
+drop table LEVELENTITY cascade constraints;
+drop table SESSIONENTITY cascade constraints;
+
+
+By default Gmail account is highly secured. When we use gmail smtp from non gmail tool, email is blocked. To test in our local environment, make your gmail account less secure as
+
+Login to Gmail.
+Access the URL as https://www.google.com/settings/security/lesssecureapps
+
+Select “Turn on”
+

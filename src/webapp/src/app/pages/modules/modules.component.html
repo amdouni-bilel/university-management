@@ -1,0 +1,145 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#ccb581" type="ball-circus" [fullScreen]="true">
+    <p class="color-white"> Loading... </p>
+</ngx-spinner>
+
+<div class="row bg-white" style="box-shadow: 10px 5px 5px #e6e6e6;">
+    <div class="col-12">
+
+        <div class="row border-bottom">
+            <div class="col-12">
+                <div class="search-criteria">
+
+                    <div class="py-2">
+                        <div class="float-left">
+                            <p class="bold color-title font-size-20 mb-0">Liste des modules</p>
+                        </div>
+                        <div class="dropdown float-right">
+                            <button type="button" class="btn btn-bg-add font-size-12 btn-add mb-0 color-white"
+                                (click)="openModal()">
+                                <span class="pl-1">Nouveau</span>
+                            </button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-4 px-0">
+            <p-table #dt dataKey="moduleId" [value]="modules" [lazy]="true" (onLazyLoad)="loadModules($event)"
+                [paginator]="true" [rows]="15" [totalRecords]="totalRecords" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Affichage de {last} sur {totalRecords} modules"
+                styleClass="p-datatable-sm p-datatable-striped">
+
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex">
+                        <span class="p-input-icon-right p-ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Mot-clé de recherche" />
+                        </span>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem"></th>
+                        <th pSortableColumn="moduleId">Module <p-sortIcon field="moduleId"></p-sortIcon></th>
+                        <th pSortableColumn="designation">Designation <p-sortIcon field="designation"></p-sortIcon></th>
+                        <th style="width: 3rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+                    <tr>
+                        <td>
+                            <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                class="p-button-text p-button-rounded p-button-plain p-0"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td>{{rowData?.moduleId}}</td>
+                        <td>{{rowData?.designation}}</td>
+                        <td>
+                            <a (click)="deleteModule(rowData)">
+                                <i class="icons icon-trash size-16"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-rowData>
+                    <tr>
+                        <td colspan="4">
+                            <div class="p-p-3">
+                                <p-table [value]="rowData.assignClasses" dataKey="assignId">
+                                    <ng-template pTemplate="caption">
+                                        <div style="display:flex; justify-content: flex-end;">
+                                            <button type="button" class="btn btn-bg-add font-size-12 btn-add mb-0 color-white" (click)="openModalAssign(rowData?.moduleId)">
+                                                <span class="pl-1">Nouveau</span>
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="classs.classId">Classe <p-sortIcon field="classs.classId"></p-sortIcon></th>
+                                            <th pSortableColumn="coefficient">Coefficient <p-sortIcon field="coefficient"></p-sortIcon></th>
+                                            <th pSortableColumn="nbrHour">Nbr d'heures <p-sortIcon field="nbrHour"></p-sortIcon></th>
+                                            <th pSortableColumn="teachers">Enseignants <p-sortIcon field="teachers"></p-sortIcon></th>
+                                            <th pSortableColumn="semester.startDate">Semestre <p-sortIcon field="semester.startDate"></p-sortIcon></th>
+                                            <th pSortableColumn="period.startDate">Période <p-sortIcon field="period.startDate"></p-sortIcon></th>
+                                            <th pSortableColumn="typeExam">T. d'épreuve <p-sortIcon field="typeExam"></p-sortIcon></th>
+                                            <th style="width:7rem"></th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <p-columnFilter type="text" field="classs.classId" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th>
+                                                <p-columnFilter type="text" field="coefficient" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th>
+                                                <p-columnFilter type="text" field="nbrHour" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th>
+                                                <p-columnFilter type="text" field="teachers" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th>
+                                                <p-columnFilter type="text" field="semester.startDate" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th>
+                                                <p-columnFilter type="text" field="period.startDate" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th>
+                                                <p-columnFilter type="text" field="typeExam" display="menu"></p-columnFilter>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-subRowData>
+                                        <tr>
+                                            <td>{{subRowData.classs?.classId}}</td>
+                                            <td>{{subRowData?.coefficient}}</td>
+                                            <td>{{subRowData?.nbrHour}}</td>
+                                            <td>{{mapTeachers(subRowData?.teachers)}}</td>
+                                            <td>{{subRowData?.semester?.code == "1" ? "S1" : "S2"}}</td>
+                                            <td>{{mapPerids(subRowData?.periods)}}</td>
+                                            <td>{{subRowData?.typeExam}}</td>
+                                            <td>
+                                                
+                                                <a (click)="openModalAssign(rowData?.moduleId, subRowData)">
+                                                    <i class="icons icon-edit size-16"></i>
+                                                </a>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <a (click)="deleteAssign(subRowData)">
+                                                    <i class="icons icon-trash size-16"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>

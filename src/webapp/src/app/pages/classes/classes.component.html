@@ -1,0 +1,141 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#ccb581" type="ball-circus" [fullScreen]="true">
+  <p class="color-white"> Loading... </p>
+</ngx-spinner>
+
+<div class="row bg-white" style="box-shadow: 10px 5px 5px #e6e6e6;">
+  <div class="col-12">
+
+    <div class="row border-bottom">
+      <div class="col-12">
+        <div class="search-criteria">
+
+          <div class="py-2">
+            <div class="float-left">
+              <p class="bold color-title font-size-20 mb-0">Liste des classes</p>
+            </div>
+            <div class="dropdown float-right">
+              <button type="button" class="btn btn-bg-add font-size-12 btn-add mb-0 color-white"
+                      (click)="openModal()">
+                <span class="pl-1">Nouveau</span>
+              </button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-4 px-0">
+      <p-table #dt dataKey="classId" [value]="classes" [lazy]="true" [paginator]="true" [rows]="15"
+               [showCurrentPageReport]="true"
+               currentPageReportTemplate="Affichage de {last} sur {totalRecords} classes"
+               styleClass="p-datatable-sm p-datatable-striped">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem"></th>
+            <th pSortableColumn="classId">Classe <p-sortIcon field="classId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="label">Description <p-sortIcon field="label"></p-sortIcon>
+            </th>
+            <th pSortableColumn="nbrStudents">Nbr d'étudiants <p-sortIcon field="nbrStudents"></p-sortIcon>
+            </th>
+            <th pSortableColumn="email">E-mail <p-sortIcon field="email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="speciality.label">Spécialié <p-sortIcon field="speciality.label">
+            </p-sortIcon>
+            </th>
+            <th pSortableColumn="category">Catégorie <p-sortIcon field="category"></p-sortIcon>
+            </th>
+            <th style="width: 6rem"></th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>
+              <p-columnFilter type="text" field="classId" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="label" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="nbrStudents" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="speciality.label" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="category" display="menu"></p-columnFilter>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-expanded="expanded">
+          <tr>
+            <td>
+              <button type="button" pButton pRipple [pRowToggler]="rowData"
+                      class="p-button-text p-button-rounded p-button-plain"
+                      [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td>{{rowData?.classId}}</td>
+            <td>{{rowData?.label}}</td>
+            <td>{{rowData?.nbrStudents}}</td>
+            <td>{{rowData?.email}}</td>
+            <td>{{rowData?.speciality?.label}}</td>
+            <td>{{rowData?.category}}</td>
+            <td>
+              <a (click)="openModal(rowData)">
+                <i class="icons icon-edit size-16"></i>
+              </a>
+              &nbsp;&nbsp;&nbsp;
+              <a (click)="deleteClass(rowData)">
+                <i class="icons icon-trash size-16"></i>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-rowData>
+          <tr>
+            <td colspan="8">
+              <div class="p-p-3">
+                <p-table [value]="rowData.modules" dataKey="moduleId">
+                  <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="moduleId">Module <p-sortIcon field="moduleId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="designation">Designation <p-sortIcon field="designation"></p-sortIcon>
+            </th>
+          <th pSortableColumn="session">Session <p-sortIcon field="session"></p-sortIcon>
+          </th>
+          </tr>
+          <tr>
+            <th>
+              <p-columnFilter type="text" field="moduleId" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="designation" display="menu"></p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="designation" display="menu"></p-columnFilter>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-subRowData>
+          <tr>
+            <td>{{subRowData.moduleId}}</td>
+            <td>{{subRowData?.designation}}</td>
+            <td>{{subRowData?.session}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+  </div>
+
+</div>
+</div>

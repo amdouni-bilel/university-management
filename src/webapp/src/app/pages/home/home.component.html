@@ -1,0 +1,53 @@
+<div class="row bg-white" style="box-shadow: 10px 5px 5px #e6e6e6;" *ngIf="result">
+    <div class="col-12">
+        <div class="row border-bottom">
+            <div class="col-12">
+                <div class="search-criteria">
+                    <div class="py-2">
+                        <div class="float-left">
+                            <p class="bold color-title font-size-20 mb-0">Épreuve - vue global</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="ml-3">
+                <p-table [columns]="cols" [value]="result" [paginator]="true" [rows]="10"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Affichage de {last} sur {totalRecords} épreuves"
+                    styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field"  [ngStyle]="{'width': col.width }">
+                                {{col.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns">
+                                <p [innerHTML]="rowData[col.field]"></p>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+    </div>
+</div>
+
+<div class="row bg-default-200 sticky sticky-top" *ngIf="!result">
+    <div class="col-12 bg-white pt-5 pb-5 mt-3">
+        <div class="col px-5 pb-5 text-center">
+            <span class="inner">
+                <i class="icons icon-warning size-50"></i>
+            </span>
+            <h1 class="mt-3 color-primary h2">Épreuve - vue global</h1>
+            <p class="font-size-12 pb-2">Il ya aucune épreuve pour la moment</p>
+            <hr />
+            <a class="btn btn-link color-text mx-0" href="#">Passer à la page suiavnte</a>
+        </div>
+    </div>
+</div>

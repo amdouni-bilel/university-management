@@ -1,0 +1,78 @@
+:host ::ng-deep .p-component {
+  font-weight: normal;
+  font-family: "Open Sans Regular";
+  font-size: 13px;
+}
+
+input:-moz-read-only { /* For Firefox */
+  background: rgba(242, 242, 242, 0.5);
+}
+
+input:read-only { 
+  background: rgba(242, 242, 242, 0.5);
+}
+
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: none;
+  border-color: none;
+  color: #3f51b5;
+}
+
+.btn-bg-add {
+  background: #ccb581;
+  border-radius: 20px;
+  height: 100%;
+}
+
+:host ::ng-deep {
+  .p-paginator {
+    .p-paginator-current {
+      margin-left: auto;
+    }
+  }
+
+  .p-paginator {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+    background-color: transparent;
+    border: 0 none;
+    color: rgba(0, 0, 0, 0.6);
+    min-width: 2rem !important;
+    height: 3rem;
+    margin: 0 !important;
+    transition: none;
+    border-radius: 50%;
+}
+
+  .p-datatable.p-datatable-customers {
+    .p-datatable-header {
+      padding: 1rem;
+      text-align: left;
+      font-size: 1.5rem;
+    }
+
+    .p-paginator {
+      padding: 1rem;
+    }
+
+    .p-datatable-thead > tr > th {
+      text-align: left;
+    }
+
+    .p-datatable-tbody > tr > td {
+      cursor: auto;
+    }
+
+    .p-dropdown-label:not(.p-placeholder) {
+      text-transform: uppercase;
+    }
+  }
+
+  /* Responsive */
+  .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+  }
+}

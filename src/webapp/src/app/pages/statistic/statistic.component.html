@@ -1,0 +1,59 @@
+<div class="row bg-white" style="box-shadow: 10px 5px 5px #e6e6e6;">
+    <div class="col-12">
+
+        <div class="row border-bottom">
+            <div class="col-12">
+                <div class="search-criteria">
+                    <div class="py-2">
+                        <div class="float-left">
+                            <p class="bold color-title font-size-20 mb-0">Statistiques</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-4">
+            <p class="color-primary font-size-20 mb-0 pb-2 pl-4">Enseignants</p>
+            <div class="col-12 mb-4">
+                <ng-select [items]="teachers$ | async" [searchable]="true" bindValue="teacherId" bindLabel="fullName"
+                    placeholder="-- Liste des enseignants --" (change)="onChangeTeacher($event)">
+                </ng-select>
+                <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+                    <canvas *ngIf="barChartDataT" baseChart [datasets]="barChartDataT" [labels]="barChartLabelsT"
+                        [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                    <h2 *ngIf="!barChartDataT" class="h4 text-center">Merci de seléctionée un enseignant</h2>
+                </div>
+            </div>
+
+            <p class="color-primary font-size-20 mb-0 pb-2 pl-4">Salles</p>
+            <div class="col-12 mb-4">
+                <ng-select [items]="rooms$ | async" [searchable]="true" bindValue="classRoomId" bindLabel="classRoomId"
+                    placeholder="-- Liste des salles --" (change)="onChangeRoom($event)">
+                </ng-select>
+                <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+                    <canvas *ngIf="barChartDataR" baseChart [datasets]="barChartDataR" [labels]="barChartLabelsR"
+                        [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                    <h2 *ngIf="!barChartDataR" class="h4 text-center">Merci de seléctionée une salle</h2>
+                </div>
+            </div>
+
+            <p class="color-primary font-size-20 mb-0 pb-2 pl-4">Classes</p>
+            <div class="col-12 mb-4">
+                <ng-select [items]="classes$ | async" [searchable]="true" bindValue="classId" bindLabel="classId"
+                    placeholder="-- Liste des classes --" (change)="onChangeClass($event)">
+                </ng-select>
+                <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+                    <canvas *ngIf="barChartDataC" baseChart [datasets]="barChartDataC" [labels]="barChartLabelsC"
+                        [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                    <h2 *ngIf="!barChartDataC" class="h4 text-center">Merci de seléctionée une classe</h2>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

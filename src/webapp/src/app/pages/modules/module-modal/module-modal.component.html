@@ -1,0 +1,156 @@
+<div class="modal-header mt-3">
+    <h2 *ngIf="!editModule" class="h3 modal-title text-center font-size-24 bold" style="width: 100%;">Ajouter un module
+    </h2>
+    <h2 *ngIf="editModule" class="h3 modal-title text-center font-size-24 bold" style="width: 100%;">Modifier un module
+    </h2>
+    <span class="close" aria-label="Close" data-dismiss="modal" (click)="closeModal()" style="cursor: pointer;">
+        <span aria-hidden="true">&times;</span>
+    </span>
+</div>
+
+<form [formGroup]="form">
+    <div *ngIf="showLoaderError" class="alert alert-error alert-icon alert-dismissible width-450" role="alert"
+        style="margin-left: auto; margin-right: auto;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="icons icon-alert color-white" aria-hidden="true"></i>
+        {{saveError}}
+    </div>
+    <div *ngIf="showLoaderSuccess" class="alert alert-valid alert-icon alert-dismissible width-450" role="alert"
+        style="margin-left: auto; margin-right: auto;">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="icons icon-arrow_circle_down color-white" aria-hidden="true"></i>
+        {{saveSuccess}}
+    </div>
+
+    <div class="modal-body pb-0">
+        <div class="row pt-1">
+            <div class="col-12 px-0">
+
+                <div class="row" style="padding-right: 5%;">
+                    <div class="col-2 py-2 px-0">
+                        <label class="float-right">Code : <span class="color-error">*</span></label>
+                    </div>
+                    <div class="col-4 pr-0">
+                        <input type="text" formControlName="moduleId">
+                    </div>
+                    <div class="col-2 py-2">
+                        <label class="float-right">Module : </label>
+                    </div>
+                    <div class="col-4 pl-0">
+                        <input type="text" formControlName="designation">
+                    </div>
+                </div>
+
+                <div class="hr-sect">Information complémentaire <span class="color-error">&nbsp; *</span></div>
+
+                <ng-container formArrayName="assignClasses">
+                    <ng-container *ngFor="let dispo of form.get('assignClasses')['controls']; let i=index"
+                        [formGroupName]="i">
+
+                        <fieldset class="pt-2" style="border: 1px solid #bda671;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-bg-primary float-right mr-2"
+                                        *ngIf=" i == form.get('assignClasses')?.value.length-1"
+                                        (click)="inProgress ? false : addAssignClass(i)"
+                                        [ngClass]="{'disabled': inProgress}">
+                                        <i class="fa fa-plus btn-plus fa-lg"></i>
+                                    </button>
+                                    <button class="btn btn-bg-primary float-right" *ngIf=" i > 0"
+                                        (click)="inProgress ? false : removeAssignClass(i)"
+                                        [ngClass]="{'disabled': inProgress}">
+                                        <i class="fa fa-times btn-fonticon fa-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-right: 5%;">
+                                <div class="col-2 py-2 px-0">
+                                    <label class="float-right">Classes : </label>
+                                </div>
+                                <div class="col-10">
+                                    <ng-select [items]="class$ | async" formControlName="classId" bindLabel="classId"
+                                        bindValue="classId" groupBy="category"></ng-select>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-right: 5%;">
+                                <div class="col-2 py-2 px-0">
+                                    <label class="float-right">Coefficient : </label>
+                                </div>
+                                <div class="col-4 pr-0">
+                                    <input type="text" formControlName="coefficient">
+                                    <p class="media" *ngIf="dispo.get('coefficient').hasError('pattern')">
+                                        <i class="icons icon-cancel color-error font-size-16"></i>
+                                        <small class="color-error">Le coefficient est invalide</small>
+                                    </p>
+                                </div>
+                                <div class="col-2 py-2">
+                                    <label class="float-right">Nombre d'heures : </label>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <input type="text" formControlName="nbrHour">
+                                    <p class="media" *ngIf="dispo.get('nbrHour').hasError('pattern')">
+                                        <i class="icons icon-cancel color-error font-size-16"></i>
+                                        <small class="color-error">Le nombre d'heures est invalide</small>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-right: 5%;">
+                                <div class="col-2 py-2 px-0">
+                                    <label class="float-right">Semestre : </label>
+                                </div>
+                                <div class="col-4 pr-0">
+                                    <ng-select [items]="semesters$ | async" formControlName="semesterId"
+                                        bindLabel="label" (change)="onChangeSemester($event, i)" bindValue="semestreId">
+                                    </ng-select>
+                                </div>
+                                <div class="col-2 py-2">
+                                    <label class="float-right">Période : </label>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <ng-select [items]="periods" formControlName="periodId" bindLabel="label"
+                                        [multiple]="true" bindValue="periodId" [readonly]="disabledPeriod?.get(i)">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-right: 5%;">
+                                <div class="col-2 py-2 px-0">
+                                    <label class="float-right">Enseignants : </label>
+                                </div>
+                                <div class="col-4 pr-0">
+                                    <ng-select [items]="teachers" formControlName="teacherIds" bindLabel="fullName"
+                                        bindValue="teacherId" [multiple]="true" [virtualScroll]="true"
+                                        [loading]="loading" (scroll)="onScroll($event)" (scrollToEnd)="onScrollToEnd()">
+                                    </ng-select>
+                                </div>
+                                <div class="col-2 py-2">
+                                    <label class="float-right">Type d'épreuve : </label>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <ng-select [items]="typeExam$ | async" formControlName="typeExam">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                        <br />
+
+                    </ng-container>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="reset()">Annuler</button>
+        <button type="button" class="btn btn-bg-primary" (click)="editModule ? update() : save()"
+            [disabled]="!form.valid">Confirmer</button>
+    </div>
+</form>

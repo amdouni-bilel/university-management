@@ -1,0 +1,68 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#ccb581" type="ball-circus" [fullScreen]="true">
+    <p class="color-white"> Loading... </p>
+</ngx-spinner>
+
+<div class="row bg-white" style="box-shadow: 10px 5px 5px #e6e6e6;">
+    <div class="col-12">
+
+        <div class="row border-bottom pb-2">
+            <div class="col-12">
+                <div class="search-criteria">
+
+                    <div class="py-2">
+                        <div class="float-left">
+                            <p class="bold color-title font-size-20 mb-0">Liste des salles</p>
+                            <label class="pt-2 my-0" *ngIf="roomsLength === 0">
+                                Vous n'avez aucun salle
+                            </label>
+                            <label class="pt-2 my-0" *ngIf="roomsLength > 0">
+                                Vous avez {{roomsLength}} salle(s)
+                            </label>
+                        </div>
+                        <div class="dropdown float-right">
+                            <button type="button" class="btn btn-bg-add font-size-12 btn-add mb-0 color-white"
+                                (click)="openModal()">
+                                <span class="pl-1">Nouveau</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-4 px-0">
+            <p-table [columns]="initRoomsColomns()" #dt [value]="rooms" [autoLayout]="true" [paginator]="true"
+                [rows]="15" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Affichage de {last} sur {totalRecords} salles"
+                styleClass="p-datatable-sm p-datatable-striped">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                        <th style="width: 6%;"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{rowData[col.field]}}
+                        </td>
+                        <td>
+                            <a (click)="openModal(rowData)">
+                                <i class="icons icon-edit size-16"></i>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a (click)="openDeleteModal(rowData)">
+                                <i class="icons icon-trash size-16"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>

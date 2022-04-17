@@ -1,0 +1,268 @@
+[
+	{
+		"classId": "1A1",
+		"label": "1 er informatique TC",
+		"group": true,
+		"category": "1A",
+		"email": "bilel.amdouni@esprit.tn"
+	},
+	{
+		"classId": "1A2",
+		"label": "1 er informatique TC",
+		"group": true,
+		"category": "1A",
+		"email": "bilel.amdouni@esprit.tn"
+	},
+	{
+		"classId": "1EM1",
+		"label": "1 er Electromecaniqe",
+		"group": true,
+		"category": "1EM",
+		"email": "esprit1819-1EM1@esprit.tn"
+	},
+	{
+		"classId": "1EM2",
+		"label": "1 er Electromecaniqe",
+		"group": true,
+		"category": "1EM",
+		"email": "esprit1819-1EM1@esprit.tn"
+	},
+	{
+		"classId": "1GC1",
+		"label": "1 er Genie civil",
+		"group": true,
+		"category": "1GC",
+		"email": "esprit1819-1GC1@esprit.tn"
+	},
+	{
+		"classId": "2A1",
+		"label": "2 er informatique TC",
+		"group": true,
+		"category": "2A",
+		"email": "esprit1819-2A1@esprit.tn"
+	},
+	{
+		"classId": "2A2",
+		"label": "2 er informatique TC",
+		"group": true,
+		"category": "2A",
+		"email": "esprit1819-2A2@esprit.tn"
+	},
+	{
+		"classId": "2EM1",
+		"label": "2er Electromecaniqe",
+		"group": true,
+		"category": "2EM",
+		"email": "esprit1819-2EM1@esprit.tn"
+	},
+	{
+		"classId": "2EM2",
+		"label": "2eme Electromecaniqe",
+		"group": true,
+		"category": "2EM",
+		"email": "esprit1819-2EM2@esprit.tn"
+	},
+	{
+		"classId": "2GC1",
+		"label": "2 eme Genie civil",
+		"group": true,
+		"category": "2GC",
+		"email": "esprit1819-2GC1@esprit.tn"
+	},
+	{
+		"classId": "2GC2",
+		"label": "2 eme Genie civil",
+		"group": true,
+		"category": "2GC",
+		"email": "esprit1819-2GC2@esprit.tn"
+	},
+	{
+		"classId": "3A1",
+		"label": "3 eme informatique TC",
+		"group": true,
+		"category": "3A",
+		"email": "esprit1819-3A1@esprit.tn"
+	},
+	{
+		"classId": "3A2",
+		"label": "3 eme informatique TC",
+		"group": true,
+		"category": "3A",
+		"email": "esprit1819-3A2@esprit.tn"
+	},
+	{
+		"classId": "3B1",
+		"label": "3 eme informatique TC",
+		"group": true,
+		"category": "3B",
+		"email": "esprit1819-3B1@esprit.tn"
+	},
+	{
+		"classId": "3B2",
+		"label": "3 eme informatique TC",
+		"group": true,
+		"category": "3B",
+		"email": "esprit1819-3B2@esprit.tn"
+	},
+	{
+		"classId": "3EM1",
+		"label": "3eme Electromecaniqe",
+		"group": true,
+		"category": "3EM",
+		"email": "esprit1819-3EM1@esprit.tn"
+	},
+	{
+		"classId": "3EM2",
+		"label": "3eme Electromecaniqe",
+		"group": true,
+		"category": "3EM",
+		"email": "esprit1819-3EM2@esprit.tn"
+	},
+	{
+		"classId": "3GC1",
+		"label": "3 eme Genie civil",
+		"group": true,
+		"category": "3GC",
+		"email": "esprit1819-3GC1@esprit.tn"
+	},
+	{
+		"classId": "3GC2",
+		"label": "3 eme Genie civil",
+		"group": true,
+		"category": "3GC",
+		"email": "esprit1819-3GC2@esprit.tn"
+	},
+	{
+		"classId": "4ARCTIC1",
+		"label": " 4ieme année informatique ",
+		"group": true,
+		"category": "4ARCTIC",
+		"email": "esprit1819-4arctic1@esprit.tn"
+	},
+	{
+		"classId": "4ARCTIC2",
+		"label": " 4ieme année informatique ",
+		"group": true,
+		"category": "4ARCTIC",
+		"email": "esprit1819-4arctic2@esprit.tn"
+	},
+	{
+		"classId": "4DS1",
+		"label": " 4ieme année informatique ",
+		"group": true,
+		"category": "4DS",
+		"email": "esprit1819-4DS1@esprit.tn"
+	},
+	{
+		"classId": "4DS2",
+		"label": " 4ieme année informatique ",
+		"group": true,
+		"category": "4DS",
+		"email": "esprit1819-4DS2@esprit.tn"
+	},
+	{
+		"classId": "4ERP-BI1",
+		"label": " 4ieme année informatique ",
+		"group": true,
+		"category": "4 ERP-BI",
+		"email": "esprit1819-4ERP-BI1@esprit.tn"
+	},
+	{
+		"classId": "4ERP-BI2",
+		"label": " 4ieme année informatique ",
+		"group": true,
+		"category": "4 ERP-BI",
+		"email": "esprit1819-4ERP-BI2@esprit.tn"
+	},
+	{
+		"classId": "4GC1",
+		"label": "4 eme Genie civil",
+		"group": true,
+		"category": "4GC",
+		"email": "esprit1819-4GC1@esprit.tn"
+	},
+	{
+		"classId": "4GC2",
+		"label": "4 eme Genie civil",
+		"group": true,
+		"category": "4GC",
+		"email": "esprit1819-4GC2@esprit.tn"
+	},
+	{
+		"classId": "4SIM1",
+		"label": "Classe 4ieme année informatique mobile",
+		"group": true,
+		"category": "4SIM",
+		"email": "esprit1819-4SIM2@esprit.tn"
+	},
+	{
+		"classId": "4SIM2",
+		"label": "Classe 4ieme année informatique mobile",
+		"group": true,
+		"category": "4SIM",
+		"email": "esprit1819-4SIM2@esprit.tn"
+	},
+	{
+		"classId": "4TWIN1",
+		"label": "Technologies du Web et de l'INternet",
+		"group": true,
+		"category": "4TWIN",
+		"email": "esprit1819-4twin1@esprit.tn"
+	},
+	{
+		"classId": "4TWIN2",
+		"label": "Technologies du Web et de l'INternet",
+		"group": true,
+		"category": "4TWIN",
+		"email": "esprit1819-4twin2@esprit.tn"
+	},
+	{
+		"classId": "5DS1",
+		"label": "5 DS 1",
+		"group": true,
+		"category": "5DS",
+		"email": "esprit1819-5DS1@esprit.tn"
+	},
+	{
+		"classId": "5ERP-BI1",
+		"label": "5ERP-BI",
+		"group": true,
+		"category": "5ERP-BI",
+		"email": "esprit1819-5ERP-BI1@esprit.tn"
+	},
+	{
+		"classId": "5ERP-BI2",
+		"label": "5ERP-BI",
+		"group": true,
+		"category": "5ERP-BI",
+		"email": "esprit1819-5ERP-BI2@esprit.tn"
+	},
+	{
+		"classId": "5GC1",
+		"label": "5 eme Genie civil",
+		"group": true,
+		"category": "5GC",
+		"email": "esprit1819-5GC1@esprit.tn"
+	},
+	{
+		"classId": "5GC2",
+		"label": "5 eme Genie civil",
+		"group": true,
+		"category": "5GC",
+		"email": "esprit1819-5GC2@esprit.tn"
+	},
+	{
+		"classId": "5GL1",
+		"label": "5 eme Genie logiciel",
+		"group": true,
+		"category": "5GL",
+		"email": "esprit1819-5GL1@esprit.tn"
+	},
+	{
+		"classId": "5GL2",
+		"label": "5 eme Genie logiciel",
+		"group": true,
+		"category": "5GL",
+		"email": "esprit1819-5GL2@esprit.tn"
+	}
+]

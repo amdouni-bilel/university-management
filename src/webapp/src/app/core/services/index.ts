@@ -1,0 +1,17 @@
+export { TitleService } from './title.service';
+export { TokenService } from './token.service';
+export { LayoutService } from './layout.service';
+export { IAMService } from './iam.service';
+export { ClassService } from './class.servise';
+export { RoomService } from './room.servise';
+export { RefService } from './ref.service';
+export { StudentService } from './student-service';
+export { TeacherService } from './teacher-service';
+export { ModuleService } from './module.service';
+export { ExamService } from './exam.service';
+export { DisponibilityService } from './disponibility.service';
+export { ExcelService } from './export.service';
+export { GroupService } from './group.service';
+export { ExcelDispTeacherService } from './export-disp-teacher.service';
+export { ExcelDispRoomService } from './export-disp-room.service';
+export { ExcelExamService } from './export-exam.service';

@@ -1,0 +1,87 @@
+spring:
+   main:
+       allow-bean-definition-overriding: true
+   profiles:
+      active: local
+   application:
+      name: university-management
+   jackson:
+     serialization:
+       fail-on-empty-beans: false
+   jpa:
+        hibernate:
+           ddl-auto: update
+         naming:
+           physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      generate-ddl: true
+      properties:
+         hibernate:
+            show_sql: true
+            dialect: org.hibernate.dialect.Oracle10gDialect
+            jdbc:
+               lob:
+                  non_contextual_creation: true
+   datasource:
+      url: jdbc:oracle:thin:@localhost:1521:orcl
+      username: dev_user
+      password: 1234
+   mail:
+      host: smtp.gmail.com
+      port: 587
+      username: amdounibilel1@gmail.com
+      password: Test_pfe
+      properties:
+         mail.smtp.auth: true
+         mail.smtp.connectiontimeout: 5000
+         mail.smtp.timeout: 5000
+         mail.smtp.writetimeout: 5000
+         mail.smtp.starttls.enable: true
+         
+logging:
+  level:
+    java:
+      sql: OFF  
+    oracle:
+      jdbc: OFF  
+    org:
+      hibernate: OFF  
+      
+# --- server
+server:
+  port: 8997
+
+# --- management
+management:
+   endpoints:
+      web:
+         exposure:
+            include:
+            - '*'
+  
+# --- keycloak
+keycloak:
+  use-resource-role-mappings: true
+  credentials:
+    secret: ce64498e-d004-4d1e-aeb2-3110a94d9100
+  auth-server-url: http://localhost:8180/auth/
+  realm: Esprit
+  resource: university-api
+  bearer-only: true
+  principal-attribute: preferred_username
+
+application:
+   migration:
+     enable: false
+     
+# --- front info
+info: 
+   environment:
+      production: false
+      env: local
+      keycloak: 
+         url: http://localhost:8180/auth/
+         realm: Esprit
+         clientId: university-web
+         redirectUri: http://localhost:4200
+      serviceBaseUrl: http://localhost:8997/
+      serviceBaseUrlMigration: http://localhost:8998/
